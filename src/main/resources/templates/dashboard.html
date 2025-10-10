@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="initial-scale=1, width=device-width">
+  	
+  	<link rel="stylesheet"  href="/css/dashboard.css" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	
+  	<!-- Chart.js Library -->
+  	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  	<!-- Background Data Sync -->
+  	<script src="/js/background-sync.js"></script>
+  	<!-- Custom Chart Script -->
+  	<script src="/js/dashboard.js"></script>
+  	
+  	
+  	
+</head>
+<body>
+  	
+  	<div class="dashboard">
+
+			<!-- Header -->
+    		<div class="header">
+				<a href="/dashboard" class="dashboard2">Dashboard</a>
+				<a href="/datasensor" class="data-sensor">Data Sensor</a>
+				<a href="/actionhistory" class="history">History</a>
+				<a href="/profile" class="profile">Profile</a>
+    		</div>
+
+			<!-- Main block -->
+    		<div class="main-block">
+				<b>Dashboard</b>
+			</div>
+
+			<!-- Chart -->
+    		<div class="chart">
+
+				<!-- Head-char -->
+				<div class="head-char">
+					<div class="chart-header temp">
+					<p>Temperature<br><span>29°C</span></p>
+					<img class="temperature-icon" alt="" src="/icon/Temperature.png">
+				</div>
+				<div class="chart-header humidity">
+					<p>Humidity<br><span>47%</span></p>
+					<img class="humidity-icon" alt="" src="/icon/Humidity.png">
+				</div>
+				<div class="chart-header light">
+					<p>Light<br><span>573 nits</span></p>
+					<img class="light-icon" alt="" src="/icon/Light.png">
+				</div>
+				<div class="chart-header device">
+					<p>Device</p>
+				</div>
+				</div>
+
+				<!-- Other charts -->
+				<div class="content">
+					<div class="Tem-Hum">
+					
+						<!-- Chú thích -->
+						<div class="note">
+							<div class="note-tem">
+								<span class="tem"></span>
+								<p>Temperature (°C)</p>
+							</div>
+							<div class="note-hum">
+								<span class="hum"></span>
+								<p>Humidity (%)</p>
+							</div>
+							<div class="note-light">
+								<span class="light"></span>
+								<p>Light (lux)</p>
+							</div>
+						</div>
+						<!-- Biểu đồ -->
+						<div class="chart-tem-hum">
+							<canvas id="temHumChart"></canvas>
+							<!-- Chart will be rendered here by JavaScript -->
+						</div>
+					</div>
+					<div class="Device">
+						<div class="DEV1">
+							<img src="/icon/lamp-off.png">
+							<img class="" alt="" src="/icon/OFF.png">
+						</div>
+						<div class="DEV2">
+							<img src="/icon/air-conditioner-off.png">
+							<img class="" alt="" src="/icon/OFF.png">
+						</div>
+						<div class="DEV3">
+							<img src="/icon/fan-off.png">
+							<img class="" alt="" src="/icon/OFF.png">
+						</div>
+					</div>
+					
+				</div>					
+    		</div>
+  	</div>	
+</body>
+</html>

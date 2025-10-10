@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="initial-scale=1, width=device-width">
+  	
+  	<link rel="stylesheet" href="/css/profile.css" />
+  	
+  	<!-- Bootstrap CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Background Data Sync -->
+	<script src="/js/background-sync.js"></script>
+	<!-- Custom JS -->
+	<script src="/js/profile.js"></script>
+	
+</head>
+<body>
+    <div class="profile-page">
+        <!-- Header -->
+		<div class="header">
+			<a href="/dashboard" class="dashboard2">Dashboard</a>
+			<a href="/datasensor" class="data-sensor">Data Sensor</a>
+			<a href="/actionhistory" class="history">History</a>
+			<a href="/profile" class="profile">Profile</a>
+		</div>
+		
+		<!-- Main block -->
+		<div class="main-block">
+			<b>Profile</b>
+		</div>
+		
+		<!-- Profile Card -->
+		<div class="profile-container">
+			<div class="profile-card">
+				<!-- Profile Image -->
+				<div class="profile-image-container">
+					<div class="profile-avatar-circle">
+						<img src="/icon/avatar.jpg" alt="Profile Avatar" class="profile-avatar-image">
+					</div>
+				</div>
+				
+				<!-- Name -->
+				<h2 class="profile-name">Nguyễn Văn Anh</h2>
+				
+				<!-- Divider -->
+				<hr class="profile-divider">
+				
+				<!-- Profile Information -->
+				<div class="profile-info">
+					<div class="info-item msv-item">
+						<span class="info-label">MSV:</span>
+						<span class="info-value">B22DCCN036</span>
+					</div>
+					
+					<div class="info-item">
+						<img src="/icon/gmail.png" alt="Email" class="info-icon">
+						<span class="info-label">Email:</span>
+						<span class="info-value">anhnv.b22cn036@stu.ptit.edu.vn</span>
+					</div>
+					
+					<div class="info-item github-item">
+						<img src="/icon/github.png" alt="GitHub" class="info-icon">
+						<span class="info-label">Github:</span>
+						<a href="https://github.com/Nguyen-Anh1905" target="_blank" class="info-value github-link">link</a>
+					</div>
+					
+					<div class="info-item">
+						<img src="/icon/phone-call.png" alt="Phone" class="info-icon">
+						<span class="info-label">Phone:</span>
+						<span class="info-value">0985804365</span>
+					</div>
+					
+					<div class="info-item link-item" onclick="openReport()">
+						<img src="/icon/pdf.png" alt="CV" class="info-icon">
+						<span class="info-label">Link Báo Cáo</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    </div>
+</body>
+</html>
