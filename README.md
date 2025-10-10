@@ -42,7 +42,7 @@ API REST hỗ trợ gửi dữ liệu từ cảm biến
 
 # Chạy ứng dụng
 ./mvnw spring-boot:run
-
+```` 
 --------
 
 👨‍💻 Tác giả
