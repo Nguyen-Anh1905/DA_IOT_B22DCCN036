@@ -42,10 +42,5 @@ public class DashboardController {
                 .build());
         return "Sent control: " + payload;
     }
-
-
-    @GetMapping("/status")
-    public List<ActionHistory> getLatestDataStatus() {
-        return actionHistoryRepository.findTop1ByOrderByTimeDesc();
-    }
+    
 }

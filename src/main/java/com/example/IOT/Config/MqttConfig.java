@@ -26,7 +26,7 @@ import org.springframework.messaging.MessageHandler;
 public class MqttConfig {
 
     // Broker IP + port
-    private final String brokerUrl = "tcp://192.168.2.7:1883";
+    private final String brokerUrl = "tcp://192.168.1.102:1883";
     private final String mqttUser = "anh";
     private final String mqttPassword = "123";
 
