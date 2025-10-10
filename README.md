@@ -46,9 +46,9 @@ API REST hỗ trợ gửi dữ liệu từ cảm biến
 --------
 
 👨‍💻 Tác giả
-Nguyễn Anh
-MSSV: B22DCCN036
-Trường: PTIT
-Email: anh9701zt@gmail.com
+- Nguyễn Anh
+- MSSV: B22DCCN036
+- Trường: PTIT
+- Email: anh9701zt@gmail.com
 
 
