@@ -1,9 +1,8 @@
 // Profile page functionality
 
 function openReport() {
-    // You can replace this with actual report link
-    alert('Mở báo cáo IoT Dashboard');
-    // window.open('path/to/your/report.pdf', '_blank');
+    // Open PDF report from Google Drive in new tab
+    window.open('https://drive.google.com/file/d/1FXJn_yYombacwM9hvU2rdctPG4xJE6uh/preview', '_blank');
 }
 
 // Initialize profile page when DOM is loaded
