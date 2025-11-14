@@ -243,6 +243,13 @@ class BackgroundDataSync {
 
     // Khởi tạo điều khiển thiết bị cho trang Dashboard
     initDeviceControl() {
+        // Kiểm tra xem có phần tử Device không (chỉ có trong Dashboard)
+        const deviceElements = document.querySelectorAll('.Device .DEV1, .Device .DEV2, .Device .DEV3');
+        if (deviceElements.length === 0) {
+            console.log('ℹ️ Device: Not on dashboard page, skipping device control initialization');
+            return;
+        }
+        
         console.log('🔧 Device: Initializing device control...');
         
         // Mapping icon cho từng thiết bị
@@ -269,39 +276,60 @@ class BackgroundDataSync {
 
                 console.log(`🎮 Device: User clicked ${device} → ${newStatus}`);
 
+                // Hiển thị loading state
+                img.style.opacity = '0.5';
+                img.style.cursor = 'wait';
+
                 // Gửi lệnh điều khiển đến backend
                 fetch('http://localhost:8080/api/dashboard/control', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ device: device, status: newStatus })
                 })
-                    .then(res => {
-                        if (!res.ok) throw new Error('Network response was not ok');
+                    .then(res => res.json()) // 👈 Đổi thành .json() để nhận response
+                    .then(data => {
+                        // Reset loading state
+                        img.style.opacity = '1';
+                        img.style.cursor = 'pointer';
+                        
+                        if (data.success) {
+                            // ✅ Thành công - ESP8266 đã phản hồi
+                            console.log(`✅ Device: ${device} controlled successfully → ${data.status}`);
+                            
+                            // Lưu trạng thái mới vào localStorage
+                            this.setDeviceState(device, data.status);
 
-                        // Lưu trạng thái mới vào localStorage
-                        this.setDeviceState(device, newStatus);
+                            // Cập nhật icon công tắc (ON.png / OFF.png)
+                            img.src = '../icon/' + data.status + '.png';
 
-                        // Cập nhật icon công tắc (ON.png / OFF.png)
-                        img.src = '../icon/' + newStatus + '.png';
+                            // Cập nhật icon thiết bị (lamp-on.png / lamp-off.png, etc.)
+                            let deviceIcon = deviceDiv.querySelector('img:first-child');
+                            if (deviceIcons[device]) {
+                                deviceIcon.src = data.status === 'ON' ? deviceIcons[device].on : deviceIcons[device].off;
 
-                        // Cập nhật icon thiết bị (lamp-on.png / lamp-off.png, etc.)
-                        let deviceIcon = deviceDiv.querySelector('img:first-child');
-                        if (deviceIcons[device]) {
-                            deviceIcon.src = newStatus === 'ON' ? deviceIcons[device].on : deviceIcons[device].off;
-
-                            // Hiệu ứng zoom khi thay đổi trạng thái
-                            deviceIcon.style.transition = 'transform 0.3s ease';
-                            deviceIcon.style.transform = 'scale(1.1)';
-                            setTimeout(() => {
-                                deviceIcon.style.transform = 'scale(1)';
-                            }, 300);
+                                // Hiệu ứng zoom khi thay đổi trạng thái
+                                deviceIcon.style.transition = 'transform 0.3s ease';
+                                deviceIcon.style.transform = 'scale(1.1)';
+                                setTimeout(() => {
+                                    deviceIcon.style.transform = 'scale(1)';
+                                }, 300);
+                            }
+                            
+                            // Hiển thị thông báo thành công
+                            this.showSuccessNotification(`${device} đã ${data.status === 'ON' ? 'BẬT' : 'TẮT'} thành công!`);
+                        } else {
+                            // ❌ Thất bại - ESP8266 không phản hồi hoặc lỗi
+                            console.error(`❌ Device: Control failed - ${data.message}`);
+                            alert(`⚠️ Lỗi điều khiển thiết bị!\n\n${data.message}\n\nVui lòng kiểm tra kết nối ESP8266.`);
                         }
-
-                        console.log(`✅ Device: ${device} controlled successfully → ${newStatus}`);
                     })
                     .catch(err => {
+                        // Reset loading state
+                        img.style.opacity = '1';
+                        img.style.cursor = 'pointer';
+                        
                         console.error(`❌ Device: Failed to control ${device}:`, err);
-                        alert('Lỗi điều khiển thiết bị: ' + err.message);
+                        alert('⚠️ Lỗi kết nối server!\n\n' + err.message);
                     });
             });
         });
@@ -341,7 +369,50 @@ class BackgroundDataSync {
         
         console.log('✅ Device: States restored successfully');
     }
+    
+    // Hiển thị thông báo thành công
+    showSuccessNotification(message) {
+        // Tạo toast notification
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            animation: slideIn 0.3s ease;
+        `;
+        toast.textContent = '✅ ' + message;
+        
+        document.body.appendChild(toast);
+        
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
 }
+
+// Thêm CSS animation cho toast
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(400px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(400px); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);
 
 // Tạo instance global
 window.backgroundDataSync = new BackgroundDataSync();

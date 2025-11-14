@@ -26,7 +26,7 @@ import org.springframework.messaging.MessageHandler;
 public class MqttConfig {
 
     // Broker IP + port
-    private final String brokerUrl = "tcp://192.168.1.102:1883";
+    private final String brokerUrl = "tcp://172.20.10.2:1883";
     private final String mqttUser = "anh";
     private final String mqttPassword = "123";
 
@@ -125,7 +125,9 @@ public class MqttConfig {
     // Handler cho status
     @Bean
     @ServiceActivator(inputChannel = "statusChannel")
-    public MessageHandler statusHandler(ActionHistoryRepository actionHistoryRepository, ObjectMapper mapper) {
+    public MessageHandler statusHandler(ActionHistoryRepository actionHistoryRepository, 
+                                        com.example.IOT.Service.DeviceControlService deviceControlService,
+                                        ObjectMapper mapper) {
         return message -> {
             try {
                 JsonNode node = mapper.readTree(message.getPayload().toString());
@@ -140,8 +142,13 @@ public class MqttConfig {
                 history.setDevice(node.get("device").asText());
                 history.setStatus(node.get("status").asText());
 
+                // Lưu vào database
                 actionHistoryRepository.save(history);
                 System.out.println("✅ Saved action history: " + history);
+                
+                // 👇 THÊM DÒNG NÀY: Notify cho pending request
+                deviceControlService.completeRequest(history.getDevice(), history);
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }

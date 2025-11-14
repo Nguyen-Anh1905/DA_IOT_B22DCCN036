@@ -10,12 +10,15 @@ let searchInput, deviceDropdown, statusDropdown, searchBtn, tbody, loadingElemen
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 ActionHistory: DOM Content Loaded');
+    console.log('🚀 ActionHistory: background-sync exists?', typeof window.backgroundDataSync);
     initializeElements();
     setupEventListeners();
     handleInitialLoad(); // Use initial load function
 });
 
 function initializeElements() {
+    console.log('🔧 ActionHistory: Initializing elements...');
     searchInput = document.getElementById('searchInput');
     deviceDropdown = document.getElementById('deviceDropdown');
     statusDropdown = document.getElementById('statusDropdown');
@@ -24,6 +27,17 @@ function initializeElements() {
     loadingElement = document.getElementById('loading');
     errorElement = document.getElementById('error');
     paginationElement = document.getElementById('paginationContainer');
+    
+    console.log('🔧 Elements found:', {
+        searchInput: !!searchInput,
+        deviceDropdown: !!deviceDropdown,
+        statusDropdown: !!statusDropdown,
+        searchBtn: !!searchBtn,
+        tbody: !!tbody,
+        loadingElement: !!loadingElement,
+        errorElement: !!errorElement,
+        paginationElement: !!paginationElement
+    });
 }
 
 function setupEventListeners() {
@@ -86,6 +100,7 @@ function setupDropdown(buttonId, listId) {
 }
 
 async function loadData() {
+    console.log('📥 ActionHistory: loadData() called');
     showLoading();
     
     try {
@@ -123,21 +138,25 @@ async function loadData() {
             params.append('direction', 'desc');
         }
 
-        console.log('API Call:', `${url}?${params.toString()}`); // Debug log
+        const fullUrl = `${url}?${params.toString()}`;
+        console.log('📡 ActionHistory: Fetching from:', fullUrl);
         
-        const response = await fetch(`${url}?${params.toString()}`);
+        const response = await fetch(fullUrl);
+        
+        console.log('📡 ActionHistory: Response status:', response.status);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('API Response:', data); // Debug log
+        console.log('📦 ActionHistory: Received data:', data);
         
         // Handle search API response format
         if (data) {
             allData = data.content || data.data || [];
             totalPages = data.totalPages || 1;
+            console.log('📊 ActionHistory: Processing', allData.length, 'records');
             renderTable(allData);
             renderPagination(data);
             hideError();
@@ -146,7 +165,7 @@ async function loadData() {
         }
         
     } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('❌ ActionHistory: Error loading data:', error);
         showError(`Failed to load action history data: ${error.message}`);
         renderTable([]);
     } finally {
@@ -155,16 +174,17 @@ async function loadData() {
 }
 
 function renderTable(data) {
-    console.log('Rendering table with data:', data); // Debug log
+    console.log('🎨 ActionHistory: Rendering table with', data ? data.length : 0, 'items');
     tbody.innerHTML = '';
     
     if (!data || data.length === 0) {
+        console.log('⚠️ ActionHistory: No data to display');
         tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #666;">No data found</td></tr>';
         return;
     }
     
-    data.forEach(item => {
-        console.log('Processing item:', item); // Debug log
+    data.forEach((item, index) => {
+        console.log(`📝 ActionHistory: Rendering row ${index + 1}:`, item);
         const row = document.createElement('tr');
         
         // Format status with appropriate styling
@@ -331,6 +351,7 @@ function handleSearch() {
 
 // Add function to handle initial page load
 function handleInitialLoad() {
+    console.log('📍 ActionHistory: Starting initial load...');
     // Reset all filters for initial load
     if (searchInput) searchInput.value = '';
     if (deviceDropdown) {
@@ -346,7 +367,7 @@ function handleInitialLoad() {
     currentSort = { field: null, order: null };
     currentPage = 0; // 0-based
     
-    console.log('Initial load started...'); // Debug log
+    console.log('📍 ActionHistory: Calling loadData()...');
     loadData();
 }
 
@@ -414,8 +435,8 @@ function hideError() {
 }
 
 // Add status styling to CSS
-const style = document.createElement('style');
-style.textContent = `
+const actionHistoryStyle = document.createElement('style');
+actionHistoryStyle.textContent = `
     .status-on {
         color: #10b981;
         font-weight: bold;
@@ -434,4 +455,4 @@ style.textContent = `
         font-size: 11px;
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(actionHistoryStyle);
