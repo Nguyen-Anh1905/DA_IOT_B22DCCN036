@@ -18,4 +18,7 @@ public class DataSensor {
     private double temperature;
     private double humidity;
     private int light;
+    private int cb1;
+    private int cb2;
+    private int cb3;
 }

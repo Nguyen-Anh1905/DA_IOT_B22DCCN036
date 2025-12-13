@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="initial-scale=1, width=device-width">
+  	
+  	<link rel="stylesheet"  href="/css/dashboardnew.css" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	
+  	<!-- Chart.js Library -->
+  	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  	<!-- Background Data Sync -->
+  	<script src="/js/background-sync.js"></script>
+  	<!-- Custom Chart Script -->
+  	<script src="/js/dashboardnew.js"></script>
+  	
+  	
+  	
+</head>
+<body>
+  	
+  	<div class="dashboard">
+
+			<!-- Header -->
+    		<div class="header">
+				<a href="/dashboard" class="dashboard2">Dashboard</a>
+				<a href="/dashboardnew" class="dashboardnew">Dashboard New</a>
+				<a href="/datasensor" class="data-sensor">Data Sensor</a>
+				<a href="/actionhistory" class="history">History</a>
+				<a href="/profile" class="profile">Profile</a>
+    		</div>
+
+			<!-- Main block -->
+    		<div class="main-block">
+				<b>Dashboard New - Warning System</b>
+			</div>
+
+			<!-- Chart -->
+    		<div class="chart">
+
+				<!-- Head-char -->
+				<div class="head-char">
+				<div class="chart-header cb1">
+					<p>CB1<br><span>0</span></p>
+					<img class="cb1-icon" alt="" src="/icon/Temperature.png">
+				</div>
+				<div class="chart-header cb2">
+					<p>CB2<br><span>0</span></p>
+					<img class="cb2-icon" alt="" src="/icon/Humidity.png">
+				</div>
+				<div class="chart-header cb3">
+					<p>CB3<br><span>0</span></p>
+					<img class="cb3-icon" alt="" src="/icon/Light.png">
+				</div>
+				</div>
+
+			<!-- Chart content - 3 separate charts -->
+			<div class="content">
+				<div class="chart-item">
+					<h3>CB1 Sensor</h3>
+					<canvas id="cb1Chart"></canvas>
+				</div>
+				<div class="chart-item">
+					<h3>CB2 Sensor</h3>
+					<canvas id="cb2Chart"></canvas>
+				</div>
+				<div class="chart-item">
+					<h3>CB3 Sensor</h3>
+					<canvas id="cb3Chart"></canvas>
+				</div>
+			</div>					
+    		</div>
+  	</div>	
+</body>
+</html>

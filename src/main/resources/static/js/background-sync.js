@@ -112,6 +112,9 @@ class BackgroundDataSync {
                     temperature: Number(record.temperature ?? record.temp ?? 0),
                     humidity: Number(record.humidity ?? record.hum ?? 0),
                     light: Number(record.light ?? 0),
+                    cb1: Number(record.cb1 ?? 0),
+                    cb2: Number(record.cb2 ?? 0),
+                    cb3: Number(record.cb3 ?? 0),
                     time: record.time || new Date().toISOString(),
                 };
 
@@ -124,7 +127,10 @@ class BackgroundDataSync {
                 const isValueChanged = !lastPoint || 
                     (lastPoint.temperature !== newPoint.temperature || 
                      lastPoint.humidity !== newPoint.humidity || 
-                     lastPoint.light !== newPoint.light);
+                     lastPoint.light !== newPoint.light ||
+                     lastPoint.cb1 !== newPoint.cb1 ||
+                     lastPoint.cb2 !== newPoint.cb2 ||
+                     lastPoint.cb3 !== newPoint.cb3);
 
                 if (!isDuplicate || isValueChanged) {
                     this.historyData.push(newPoint);
@@ -142,8 +148,8 @@ class BackgroundDataSync {
                         detail: { newPoint, allData: this.historyData }
                     }));
                     
-                    console.log('� Chart: New data synced:', fmtTime(newPoint.time), 
-                               `T:${newPoint.temperature}°C H:${newPoint.humidity}% L:${newPoint.light}lux`);
+                    console.log('🔄 Chart: New data synced:', fmtTime(newPoint.time), 
+                               `T:${newPoint.temperature}°C H:${newPoint.humidity}% L:${newPoint.light}lux CB1:${newPoint.cb1} CB2:${newPoint.cb2} CB3:${newPoint.cb3}`);
                     return true;
                 } else {
                     console.log('🔄 Chart: Duplicate data ignored:', fmtTime(newPoint.time));

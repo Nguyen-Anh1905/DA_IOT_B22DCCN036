@@ -113,6 +113,9 @@ public class MqttConfig {
                 sensor.setTemperature(node.get("temperature").asDouble());
                 sensor.setHumidity(node.get("humidity").asDouble());
                 sensor.setLight(node.get("light").asInt());
+                sensor.setCb1(node.has("cb1") ? node.get("cb1").asInt() : 0);
+                sensor.setCb2(node.has("cb2") ? node.get("cb2").asInt() : 0);
+                sensor.setCb3(node.has("cb3") ? node.get("cb3").asInt() : 0);
 
                 dataSensorRepository.save(sensor);
                 System.out.println("✅ Saved datasensor: " + sensor);

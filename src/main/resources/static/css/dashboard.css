@@ -95,6 +95,15 @@ body{
 .chart-header.light {
 	background: rgba(0, 214, 143, 0.2);
 }
+.chart-header.cb1 {
+	background: rgba(255, 193, 7, 0.2);
+}
+.chart-header.cb2 {
+	background: rgba(156, 39, 176, 0.2);
+}
+.chart-header.cb3 {
+	background: rgba(255, 87, 34, 0.2);
+}
 .chart-header.device {
 	background: #f5b358;
 }
@@ -182,6 +191,42 @@ body{
 		width: 80px;
 		height: 20px;
 		background: #00B982;
+		border: none;
+	}
+}
+.note .note-cb1{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	span.cb1 {
+		width: 80px;
+		height: 20px;
+		background: #FFC107;
+		border: none;
+	}
+}
+.note .note-cb2{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	span.cb2 {
+		width: 80px;
+		height: 20px;
+		background: #9C27B0;
+		border: none;
+	}
+}
+.note .note-cb3{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	span.cb3 {
+		width: 80px;
+		height: 20px;
+		background: #FF5722;
 		border: none;
 	}
 }

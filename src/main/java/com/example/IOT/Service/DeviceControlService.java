@@ -20,7 +20,7 @@ public class DeviceControlService {
         CompletableFuture<ActionHistory> future = new CompletableFuture<>();
         pendingRequests.put(device, future);
         
-        // Timeout sau 2 giây nếu không có phản hồi
+        // Timeout sau 4 giây nếu không có phản hồi
         CompletableFuture.delayedExecutor(4, TimeUnit.SECONDS).execute(() -> {
             if (!future.isDone()) {
                 future.completeExceptionally(new RuntimeException("Timeout: No response from device"));
